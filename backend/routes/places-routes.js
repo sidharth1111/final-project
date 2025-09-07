@@ -1,11 +1,13 @@
 const express = require('express');
+const HttpError = require("../models/http-error")
+
 const router = express.Router();
 
 const dummy_places = [
     {
         id: 'p1',
-        title: "esb",
-        description: "tall",
+        title: "Taj Mahal",
+        description: "Beautiful",
         location: {
             lat: 34,
             lng: -84
@@ -23,9 +25,7 @@ router.get("/:pid", (req, res, next) => {
     });
 
     if (!place) {
-        const error = new Error("Coudn't find place for place id.");
-        error.code = 404;
-        throw error;
+        throw new HttpError("Coudn't find a place for the provided place id.", 500);
     }
 
     res.json({place: place});
@@ -39,9 +39,7 @@ router.get("/user/:uid", (req, res, next) => {
     });
 
     if (!place) {
-        const error = new Error("Couldn't find place for user id.");
-        error.code = 404;
-        return next(error);
+        return next(new HttpError("Couldn't find a place for the provided user id.", 404));
     }
     res.json({place})
 });
