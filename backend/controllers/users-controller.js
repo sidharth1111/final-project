@@ -37,16 +37,6 @@ const signup = (req, res, next) => {
     dummy_users.push(createdUser);
     res.status(200).json({ user: createdUser });
     console.log(dummy_users);
-    // if (username && pass) {
-    //     const user = dummy_users.find(user => user.username === username)
-    //     if (user) {
-    //         res.status(400).json({message: "Username already taken."})
-    //     }
-    //     res.status(200).json({message: "Registeration successful."});
-    // }
-    // else {
-    //     res.status(500).json({message: "Both fields are mandatory to enter."})
-    // }
 };
 
 const login = (req, res, next) => {
