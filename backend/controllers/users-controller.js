@@ -1,5 +1,6 @@
 const HttpError = require("../models/http-error");
 const { v4: uuidv4 } = require("uuid");
+const { validationResult } = require("express-validator");
 
 let dummy_users = [
     {
@@ -21,6 +22,14 @@ const getUsers = (req, res, next) => {
 };
 
 const signup = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors);
+        throw new HttpError(
+            "Invalid inputs passed, please check your data.",
+            422
+        );
+    }
     const { name, email, password } = req.body;
     const createdUser = {
         id: uuidv4(),
